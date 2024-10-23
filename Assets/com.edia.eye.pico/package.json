@@ -23,6 +23,7 @@
   "dependencies": { 
 	"com.unity.xr.picoxr": "2.5.3",
 	"com.edia.core": "0.4.0"
+	"com.edia.eye": "0.x.x"
 	},
   "hideInEditor": false
 }
