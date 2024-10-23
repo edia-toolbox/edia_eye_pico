@@ -21,7 +21,7 @@
 			"path": "Samples~/"
 		}],
   "dependencies": { 
-	"com.unity.xr.picoxr": "2.5.3"
+	"com.unity.xr.picoxr": "2.5.3",
 	"com.edia.core": "git@gitlab.gwdg.de:edia/edia_core.git?path=Assets/com.edia.core#dev"
 	},
   "hideInEditor": false
