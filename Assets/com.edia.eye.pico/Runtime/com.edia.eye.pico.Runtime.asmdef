@@ -1,0 +1,19 @@
+{
+    "name": "com.edia.eye.pico.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "Edia.Core",
+        "edia.eye",
+        "Unity.XR.PICO",
+        "PICO.TobSupport"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

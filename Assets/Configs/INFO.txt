@@ -1,0 +1,4 @@
+Do not delete this folder or its parents.
+For now, a folder `Assets/Configs` is needed to be able to build the project to satisfy the EDIA build checks. 
+
+#2024-08-08: FK
