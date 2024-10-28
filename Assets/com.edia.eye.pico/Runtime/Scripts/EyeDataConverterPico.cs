@@ -1,6 +1,8 @@
 using UnityEngine;
 using Unity.XR.PXR;
 using Unity.XR.PICO.TOBSupport;
+using System.Collections.Generic;
+using System;
 
 namespace Edia.Eye.Pico {
 
@@ -27,6 +29,13 @@ namespace Edia.Eye.Pico {
 
         private Vector3 combineEyeGazeVector;
 
+        private struct EyePose {
+            public string Eye;
+            public bool IsValid;
+            public float Confidence;
+            public Vector3 Position;
+            public Quaternion Rotation;
+        }
 
         private void Awake() {
             SetupPicoEyeTracking();
@@ -94,7 +103,18 @@ namespace Edia.Eye.Pico {
 
             PXR_MotionTracking.GetPerEyePose(ref timestamp, ref leftEyePose, ref rightEyePose); // the timestamp does not seem to work
             PXR_MotionTracking.GetEyeOpenness(ref opennessLeft, ref opennessRight);
-            Debug.Log($"Openness: {opennessLeft}");
+
+            EyePose eyePose = new EyePose();
+            List<EyePose> eyePoses = new List<EyePose>();
+
+            //foreach (Constants.EyeId eye in Enum.GetValues(typeof(Constants.EyeId))) {
+            //    var ed = new EyeDataPackage();
+
+            //    eyePose.Eye = eye.ToString();
+            //    eyePos
+
+            Vector3 position = new Vector3(leftEyePose.Position.x, leftEyePose.Position.y, leftEyePose.Position.z);
+            Quaternion rotation = new Quaternion(leftEyePose.Orientation.x, leftEyePose.Orientation.y, leftEyePose.Orientation.z, leftEyePose.Orientation.w);
 
             successPos = PXR_EyeTracking.GetCombineEyeGazePoint(out eyeCenterPos);
             successRot = PXR_EyeTracking.GetCombineEyeGazeVector(out combineEyeGazeVector);
