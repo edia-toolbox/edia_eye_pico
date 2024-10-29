@@ -3,6 +3,7 @@ using Unity.XR.PXR;
 using Unity.XR.PICO.TOBSupport;
 using System.Collections.Generic;
 using System;
+using Unity.XR.PXR.Input;
 
 namespace Edia.Eye.Pico {
 
@@ -26,6 +27,8 @@ namespace Edia.Eye.Pico {
         Posef leftEyePose;
         bool success, successPos, successRot = false;
         float opennessLeft, opennessRight;
+        Vector3 posWorld;
+        Quaternion rotWorld;
 
         private Vector3 combineEyeGazeVector;
 
@@ -35,6 +38,8 @@ namespace Edia.Eye.Pico {
             public float Confidence;
             public Vector3 Position;
             public Quaternion Rotation;
+            public float Openness;
+            public float Diameter;
         }
 
         private void Awake() {
@@ -101,51 +106,77 @@ namespace Edia.Eye.Pico {
 
         void HandleGazeData() {
 
-            PXR_MotionTracking.GetPerEyePose(ref timestamp, ref leftEyePose, ref rightEyePose); // the timestamp does not seem to work
-            PXR_MotionTracking.GetEyeOpenness(ref opennessLeft, ref opennessRight);
-
-            EyePose eyePose = new EyePose();
-            List<EyePose> eyePoses = new List<EyePose>();
-
-            //foreach (Constants.EyeId eye in Enum.GetValues(typeof(Constants.EyeId))) {
-            //    var ed = new EyeDataPackage();
-
-            //    eyePose.Eye = eye.ToString();
-            //    eyePos
-
-            Vector3 position = new Vector3(leftEyePose.Position.x, leftEyePose.Position.y, leftEyePose.Position.z);
-            Quaternion rotation = new Quaternion(leftEyePose.Orientation.x, leftEyePose.Orientation.y, leftEyePose.Orientation.z, leftEyePose.Orientation.w);
-
             successPos = PXR_EyeTracking.GetCombineEyeGazePoint(out eyeCenterPos);
             successRot = PXR_EyeTracking.GetCombineEyeGazeVector(out combineEyeGazeVector);
 
-            success = successPos && successRot;
+            int returnPose = PXR_MotionTracking.GetPerEyePose(ref timestamp, ref leftEyePose, ref rightEyePose); //Single eye poses are in weird format so we do not use them
+            int returnOpenness = PXR_MotionTracking.GetEyeOpenness(ref opennessLeft, ref opennessRight);
+            int returnPupil = PXR_MotionTracking.GetEyePupilInfo(ref eyePupilData);
 
-            var eyeData = new EyeDataPackage();
-            eyeData.eye = Edia.Constants.EyeId.CENTER.ToString().ToLower();
-            eyeData.isValid = success;
-            eyeData.timestamp_et = (float)timestamp;
-            eyeData.timestamp_lsl = UseLslTiming ? LslTimer.GetLslTime() : 0f;  // We don't get offset so we use LSL timestamp from here
-            if (success) {
-                eyeData.direction_x_local = combineEyeGazeVector.x;
-                eyeData.direction_y_local = combineEyeGazeVector.y;
-                eyeData.direction_z_local = combineEyeGazeVector.z;
-                eyeData.position_x_local = eyeCenterPos.x;
-                eyeData.position_y_local = eyeCenterPos.y;
-                eyeData.position_z_local = eyeCenterPos.z;
+            success = successPos || successRot || (returnPose == 0) || (returnOpenness == 0) || (returnPupil == 0);
 
-                eyeCenterRot = Quaternion.LookRotation(combineEyeGazeVector);
-                eyeData.rotation_x_local = eyeCenterRot.eulerAngles.x;
-                eyeData.rotation_y_local = eyeCenterRot.eulerAngles.y;
-                eyeData.rotation_z_local = eyeCenterRot.eulerAngles.z;
+            //Send no package if nothing returned
+            if (!success) {
+                return;
+            }
+            
+            List<EyePose> eyePoses = new List<EyePose>();
+
+            foreach (Constants.EyeId eye in Enum.GetValues(typeof(Constants.EyeId))) {
+                EyePose eyePose = new EyePose();
+                eyePose.Eye = eye.ToString().ToLower();
+                switch (eye) {
+                    case Constants.EyeId.LEFT:
+                        eyePose.IsValid = (returnOpenness == 0) || (returnPupil == 0);
+                        eyePose.Openness = (returnOpenness == 0) ? opennessLeft : -1;
+                        eyePose.Diameter = (returnPupil == 0) ? eyePupilData.leftEyePupilDiameter : -1;
+                        break;
+                    case Constants.EyeId.RIGHT:
+                        eyePose.IsValid = (returnOpenness == 0) || (returnPupil == 0);
+                        eyePose.Openness = (returnOpenness == 0) ? opennessRight : -1;
+                        eyePose.Diameter = (returnPupil == 0) ? eyePupilData.rightEyePupilDiameter : -1;
+                        break;
+                    case Constants.EyeId.CENTER:
+                        eyePose.IsValid = success;
+                        eyePose.Position = successPos ? eyeCenterPos : new Vector3();
+                        eyePose.Rotation = successRot ? Quaternion.LookRotation(combineEyeGazeVector) : new Quaternion();
+                        eyePose.Openness = (returnOpenness == 0) ? (opennessLeft + opennessRight) / 2 : -1;
+                        eyePose.Diameter = (returnPupil == 0) ? (eyePupilData.leftEyePupilDiameter + eyePupilData.rightEyePupilDiameter) / 2 : -1;
+                        break;
+                }
+                eyePoses.Add(eyePose);
             }
 
-            if (EyeDataHandler.Instance == null || !EyeDataHandler.Instance.enabled) {
-                Debug.LogError("No active EyeDataHandler (EDIA Eye) found in the scene.");
-            }
+            foreach (var ep in eyePoses) {
+                var ed = new EyeDataPackage();
+                ed.eye = ep.Eye;
+                ed.isValid = ep.IsValid;
+                ed.timestamp_et = (double)(timestamp / 1_000_000) % (long)1e8; // Convert from nanoseconds to milliseconds and keep last 8 digits;
+                ed.timestamp_lsl = UseLslTiming ? LslTimer.GetLslTime() : 0f;  // We don't get offset so we use LSL timestamp from here
+                if (ep.IsValid) {
+                    ed.position_x_local = ep.Position.x;
+                    ed.position_y_local = ep.Position.y;
+                    ed.position_z_local = ep.Position.z;
 
-            lock (EyeDataHandler.Instance.Lock) {
-                EyeDataHandler.Instance.AddEyeDataPackage(eyeData);
+                    ed.rotation_x_local = ep.Rotation.eulerAngles.x;
+                    ed.rotation_y_local = ep.Rotation.eulerAngles.y;
+                    ed.rotation_z_local = ep.Rotation.eulerAngles.z;
+                    
+                    Vector3 direction = ep.Rotation * Vector3.forward;
+                    ed.direction_x_local = direction.x;
+                    ed.direction_y_local = direction.y;
+                    ed.direction_z_local = direction.z;
+
+                    ed.openness = ep.Openness;
+                }
+
+                if (EyeDataHandler.Instance == null || !EyeDataHandler.Instance.enabled) {
+                    Debug.LogError("No active EyeDataHandler (EDIA Eye) found in the scene.");
+                }
+
+                lock (EyeDataHandler.Instance.Lock) {
+                    EyeDataHandler.Instance.AddEyeDataPackage(ed);
+                }
             }
         }
     }
