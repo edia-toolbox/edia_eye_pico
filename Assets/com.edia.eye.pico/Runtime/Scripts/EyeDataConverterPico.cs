@@ -151,8 +151,8 @@ namespace Edia.Eye.Pico {
                 var ed = new EyeDataPackage();
                 ed.eye = ep.Eye;
                 ed.isValid = ep.IsValid;
-                ed.timestamp_et = (double)(timestamp / 1_000_000) % (long)1e8; // Convert from nanoseconds to milliseconds and keep last 8 digits;
-                ed.timestamp_lsl = UseLslTiming ? LslTimer.GetLslTime() : 0f;  // We don't get offset so we use LSL timestamp from here
+                ed.timestamp_et = (double)(timestamp / 1_000_000) % (long)1e8; // Convert from nanoseconds to milliseconds (int division -> flooring) and keep last 8 digits;
+                ed.timestamp_lsl = UseLslTiming ? LslTimer.GetLslTime() : 0f;  // We don't get a reliable offset between LSL and PICO clocks, so we use LSL timestamp from here
                 if (ep.IsValid) {
                     ed.position_x_local = ep.Position.x;
                     ed.position_y_local = ep.Position.y;

@@ -15,11 +15,11 @@
       "hash": "a18c92b3ef8168145a7b521a1b97bd16a82f4569"
     },
     "com.edia.eye": {
-      "version": "git@gitlab.gwdg.de:edia/edia_eye.git?path=Assets/com.edia.eye#dev",
+      "version": "git@gitlab.gwdg.de:edia/edia_eye.git?path=Assets/com.edia.eye#feat/addEyeBallViz",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "7be199147c036109420fbd9ebd318829f3d73db3"
+      "hash": "d42051e67a271db08c2cb061e2af9a556a0be097"
     },
     "com.unity.burst": {
       "version": "1.8.9",
