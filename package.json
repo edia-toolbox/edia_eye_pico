@@ -1,0 +1,29 @@
+{
+  "name": "com.edia.eye.pico",
+  "displayName": "EDIA Eye PICO",
+  "version": "0.2.0",
+  "unity": "6000.0",
+  "description": "EDIA: Eye tracking PICO",
+  "keywords": [
+    "EDIA",
+    "xr",
+    "vr",
+    "experiment",
+	"PICO",
+	"PICO4 Enterprise"
+  ],
+  "author": {
+    "name": "EDIA"
+  },
+  "samples": [{
+			"displayName": "EDIA Eye PICO demo scene",
+			"description": "Demonstrating PICO 4E > edia eyepackage conversion.",
+			"path": "Samples~/"
+		}],
+  "dependencies": { 
+	"com.unity.xr.picoxr": "2.5.3",
+	"com.edia.core": "0.4.0",
+	"com.edia.eye": "0.1.0"
+	},
+  "hideInEditor": false
+}
