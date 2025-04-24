@@ -16,13 +16,18 @@ Eye tracking support for the PICO headsets (PICO 4E, not tested for other headse
    >
    > ![Img](Media/Screenshots/PckgMngrXriHands.png)
    > </details>
-
-
    
 
-3. Import Samples:
-    1. Hands: → Hand Visualizer
-    2. XRI: → Starter Assets & Hands Interaction Demo
+3. Import relevant `Samples`:
+    1. `XR Hands`: → `Hand Visualizer`
+    2. `XRI`: → `Starter Assets` and  `Hands Interaction Demo`
+    > <details>
+    >
+    > <summary>Img</summary>  
+    >
+    > ![img.png](Media/Screenshots/PckgMngrXriSamples.png)
+    > </details>
+   
 2. Import the [Edia UXF fork](https://github.com/edia-toolbox/edia_uxf) package.
 
 4. install EDIA Core
