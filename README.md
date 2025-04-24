@@ -12,10 +12,11 @@ Eye tracking support for the PICO headsets (PICO 4E, not tested for other headse
    2. `XR Hands`  
    <details>
 
-     <summary>Img</summary> 
-     ![Img](Media/Screenshots/PckgMngrXriHands.png)
-   
+   <summary>Img</summary> 
+![Img](Media/Screenshots/PckgMngrXriHands.png)
    </details>
+
+
    
 
 3. Import Samples:
