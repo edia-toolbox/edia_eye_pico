@@ -10,12 +10,12 @@ Eye tracking support for the PICO headsets (PICO 4E, not tested for other headse
 1. Install (from The Unity Registry): 
    1. `XR Interaction Toolkit` (XRI) 
    2. `XR Hands`  
-   <details>
-
-   <summary>Img</summary>  
-   
-   ![Img](Media/Screenshots/PckgMngrXriHands.png)
-   </details>
+   > <details>
+   >
+   > <summary>Img</summary>  
+   >
+   > ![Img](Media/Screenshots/PckgMngrXriHands.png)
+   > </details>
 
 
    
