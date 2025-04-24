@@ -29,6 +29,11 @@ Eye tracking support for the PICO headsets (PICO 4E, not tested for other headse
     > </details>
    
 2. Import the [Edia UXF fork](https://github.com/edia-toolbox/edia_uxf) package.
+    
+    ```bash
+    git@github.com:edia-toolbox/edia_core.git?path=Assets/com.edia.core#dev
+    
+    ```
 
 4. install EDIA Core
 
