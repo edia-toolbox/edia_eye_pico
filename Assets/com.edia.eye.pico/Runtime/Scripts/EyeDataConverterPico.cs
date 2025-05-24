@@ -7,6 +7,7 @@ using Unity.XR.PXR.Input;
 
 namespace Edia.Eye.Pico {
 
+    [EdiaHeader("EDIA EYE", "Pico converter","Manages Pico SDK eyedata conversion to EDIA")]
     public class EyeDataConverterPico : MonoBehaviour {
 
         public ILslTimeAccessible LslTimer { get; private set; }
