@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Samples/EyeDataConverterScene.unity
+    guid: 1b2a88a3a3048124f81dc36ee81b98f7
   m_configObjects:
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: 337da343fc89eaa4faa747bad3cd65c0, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 5681cd342ff15134d84a33ce3d9f8fbb, type: 2}
