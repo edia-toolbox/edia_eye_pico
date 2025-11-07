@@ -1,6 +1,5 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "com.edia.core": "https://github.com/edia-toolbox/edia_core.git?path=Assets/com.edia.core#main",
     "com.edia.eye": "https://github.com/edia-toolbox/edia_eye.git?path=Assets/com.edia.eye#main",
     "com.edia.uxf": "https://github.com/edia-org/unity-experiment-framework.git?path=Assets/com.edia.uxf#main",
