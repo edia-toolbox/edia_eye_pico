@@ -1,32 +1,33 @@
 {
   "dependencies": {
     "com.edia.core": {
-      "version": "git@gitlab.gwdg.de:edia/edia_core.git?path=Assets/com.edia.core#dev",
+      "version": "https://github.com/edia-toolbox/edia_core.git?path=Assets/com.edia.core#main",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.unity.inputsystem": "1.7.0",
-        "com.unity.xr.interaction.toolkit": "2.5.3",
-        "com.unity.xr.management": "4.4.1",
-        "com.unity.render-pipelines.universal": "14.0.9",
+        "com.unity.inputsystem": "1.13.1",
+        "com.unity.xr.interaction.toolkit": "3.0.8",
+        "com.unity.xr.management": "4.5.1",
+        "com.unity.xr.hands": "1.5.1",
+        "com.unity.render-pipelines.universal": "17.0.4",
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.textmeshpro": "3.0.8"
       },
-      "hash": "da29c05fa88647c4102803e8fcaf616d776bcc89"
+      "hash": "b16d0588fabf8c47a6d9241866a8624cc76c3f94"
     },
     "com.edia.eye": {
-      "version": "git@gitlab.gwdg.de:edia/edia_eye.git?path=Assets/com.edia.eye#dev",
+      "version": "https://github.com/edia-toolbox/edia_eye.git?path=Assets/com.edia.eye#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "0f2384fb3699be37006af826bb425c400f7e0fcc"
+      "hash": "36ddd969ebd541274082c2e3d99f053d25bf81f1"
     },
     "com.edia.uxf": {
-      "version": "https://github.com/edia-org/unity-experiment-framework.git?path=Assets/com.edia.uxf#dev",
+      "version": "https://github.com/edia-org/unity-experiment-framework.git?path=Assets/com.edia.uxf#main",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4e4e58bb0ee44e63c87aa32d815dd93e57e66680"
+      "hash": "81e2534a6cc329272b1a2f1c2c872c1aa97f0768"
     },
     "com.unity.burst": {
       "version": "1.8.19",
@@ -290,15 +291,28 @@
     },
     "com.unity.xr.core-utils": {
       "version": "2.5.2",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.xr": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.xr.hands": {
+      "version": "1.5.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.xr": "1.0.0",
+        "com.unity.inputsystem": "1.3.0",
+        "com.unity.mathematics": "1.2.6",
+        "com.unity.xr.core-utils": "2.2.0",
+        "com.unity.xr.management": "4.0.1"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.xr.interaction.toolkit": {
-      "version": "3.0.7",
+      "version": "3.0.8",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -324,25 +338,28 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.management": {
-      "version": "4.5.0",
+      "version": "4.5.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0",
+        "com.unity.xr.core-utils": "2.2.1",
         "com.unity.modules.subsystems": "1.0.0",
-        "com.unity.xr.legacyinputhelpers": "2.1.7"
+        "com.unity.xr.legacyinputhelpers": "2.1.11"
       },
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.picoxr": {
-      "version": "file:PICO-Unity-Integration-SDK-2.5.0",
+      "version": "https://github.com/Pico-Developer/PICO-Unity-Integration-SDK.git#3.1.0",
       "depth": 0,
-      "source": "embedded",
+      "source": "git",
       "dependencies": {
         "com.unity.xr.management": "4.0.0",
-        "com.unity.xr.interaction.toolkit": "2.0.0"
-      }
+        "com.unity.xr.interaction.toolkit": "2.0.0",
+        "com.unity.xr.core-utils": "2.3.0"
+      },
+      "hash": "b8477bb17f2a8258b6eb90a5398bf8b0d1e296d2"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
